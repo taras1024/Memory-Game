@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const cardArray = [
+    const cardsArray = [
         {
             name: 'fries',
             img: 'images/fries.png'
@@ -32,8 +32,25 @@ document.addEventListener('DOMContentLoaded', () => {
             name: 'milkshake',
             img: 'images/milkshake.png'
         },
-
+        {
+            name: 'pizza',
+            img: 'images/pizza.png'
+        },
+        {
+            name: 'pizza',
+            img: 'images/pizza.png'
+        },
+        {
+            name: 'hotdog',
+            img: 'images/hotdog.png'
+        },
+        {
+            name: 'hotdog',
+            img: 'images/hotdog.png'
+        },
     ]
+
+    cardsArray.sort(() => 0.5 - Math.random())
 
     const grid = document.querySelector('.grid')
     const resultDisplay = document.querySelector('#result')
@@ -44,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     function createBoard() {
-        for (let i = 0; i < cardArray.length; i++) {
+        for (let i = 0; i < cardsArray.length; i++) {
             let card = document.createElement('img')
             card.setAttribute('src', 'images/blank.png')
             card.setAttribute('data-id', i)
@@ -57,9 +74,9 @@ document.addEventListener('DOMContentLoaded', () => {
     //flipCard
     function flipCard() {
         let cardId = this.src = this.getAttribute('data-id')
-        cardsChosen.push(cardArray[cardId].name)
+        cardsChosen.push(cardsArray[cardId].name)
         cardsChosenId.push(cardId)
-        this.setAttribute('src', cardArray[cardId].img)
+        this.setAttribute('src', cardsArray[cardId].img)
 
         if (cardsChosen.length === 2) {
             setTimeout(checkForMatch, 500)
@@ -88,6 +105,10 @@ document.addEventListener('DOMContentLoaded', () => {
         cardsChosenId = []
 
         resultDisplay.textContent = cardsWon.length
+
+        if (cardsWon.length === cardsArray.length/2) {
+            alert('Congratulation You found them all')
+        }
     }
 
 
