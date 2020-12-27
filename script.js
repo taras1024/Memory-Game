@@ -1,20 +1,24 @@
-document.addEventListener('DOMContentLoaded', ()=>{
+document.addEventListener('DOMContentLoaded', () => {
     const cardArray = [
         {
             name: 'fries',
             img: 'images/fries.png'
         },
         {
-            name: 'blank',
-            img: 'images/blank.png'
+            name: 'fries',
+            img: 'images/fries.png'
         },
         {
             name: 'cheeseburger',
             img: 'images/cheeseburger.png'
         },
         {
-            name: 'hotdog',
-            img: 'images/hotdog.png'
+            name: 'cheeseburger',
+            img: 'images/cheeseburger.png'
+        },
+        {
+            name: 'ice-cream',
+            img: 'images/ice-cream.png'
         },
         {
             name: 'ice-cream',
@@ -25,19 +29,21 @@ document.addEventListener('DOMContentLoaded', ()=>{
             img: 'images/milkshake.png'
         },
         {
-            name: 'pizza',
-            img: 'images/pizza.png'
+            name: 'milkshake',
+            img: 'images/milkshake.png'
         },
-        {
-            name: 'white',
-            img: 'images/white.png'
-        },
+
     ]
 
     const grid = document.querySelector('.grid')
+    const resultDisplay = document.querySelector('#result')
+
+    let cardsChosen = []
+    let cardsChosenId = []
+    let cardsWon = []
 
 
-    function createBoard () {
+    function createBoard() {
         for (let i = 0; i < cardArray.length; i++) {
             let card = document.createElement('img')
             card.setAttribute('src', 'images/blank.png')
@@ -48,13 +54,44 @@ document.addEventListener('DOMContentLoaded', ()=>{
         }
     }
 
+    //flipCard
+    function flipCard() {
+        let cardId = this.src = this.getAttribute('data-id')
+        cardsChosen.push(cardArray[cardId].name)
+        cardsChosenId.push(cardId)
+        this.setAttribute('src', cardArray[cardId].img)
 
-    function flipCard () {
-
+        if (cardsChosen.length === 2) {
+            setTimeout(checkForMatch, 500)
+        }
     }
 
-    createBoard()
 
+    //check for matches
+    function checkForMatch() {
+        let cards = document.querySelectorAll('img')
+        const optionOneId = cardsChosenId[0]
+        const optionTwoId = cardsChosenId[1]
+
+        if (cardsChosen[0] === cardsChosen[1]) {
+            alert('You found a match')
+            cards[optionOneId].setAttribute('src', 'images/white.png')
+            cards[optionTwoId].setAttribute('src', 'images/white.png')
+            cardsWon.push(cardsChosen)
+        } else {
+            cards[optionOneId].setAttribute('src', 'images/blank.png')
+            cards[optionTwoId].setAttribute('src', 'images/blank.png')
+            alert('Try again')
+        }
+
+        cardsChosen = []
+        cardsChosenId = []
+
+        resultDisplay.textContent = cardsWon.length
+    }
+
+
+    createBoard()
 
 
 })
